@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>Beheer – {{ config('app.name', 'S-Food') }}</title>
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased bg-gray-100">
+
+        {{-- Top bar --}}
+        <nav x-data="{ open: false }" class="bg-white border-b border-gray-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center space-x-4">
+                        <a href="/admin" class="text-xl font-bold text-orange-500">S-Food</a>
+                        <span class="text-sm text-gray-400 hidden sm:inline">Beheerpaneel</span>
+                    </div>
+
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/admin" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin') ? 'text-orange-500 font-semibold' : '' }}">Dashboard</a>
+                        <a href="/admin/bestellingen" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin/bestellingen*') ? 'text-orange-500 font-semibold' : '' }}">
+                            Bestellingen
+                        </a>
+                        <a href="/admin/gebruikers" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin/gebruikers*') ? 'text-orange-500 font-semibold' : '' }}">Gebruikers</a>
+                        <a href="/" class="text-sm text-gray-400 hover:text-gray-600">← Naar site</a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text-sm text-red-500 hover:text-red-700">Uitloggen</button>
+                        </form>
+                    </div>
+
+                    {{-- Mobile hamburger --}}
+                    <button @click="open = !open" class="md:hidden p-2 rounded-md text-gray-400 hover:bg-gray-100">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {{-- Mobile menu --}}
+            <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-gray-100 px-4 py-3 space-y-2">
+                <a href="/admin" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Dashboard</a>
+                <a href="/admin/bestellingen" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Bestellingen</a>
+                <a href="/admin/gebruikers" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Gebruikers</a>
+                <a href="/" class="block text-sm text-gray-400 hover:text-gray-600 py-1">← Naar site</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="block text-sm text-red-500 hover:text-red-700 py-1">Uitloggen</button>
+                </form>
+            </div>
+        </nav>
+
+        {{-- Page content --}}
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {{ $slot }}
+        </main>
+
+    </body>
+</html>
