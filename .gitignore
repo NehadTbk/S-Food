@@ -1,0 +1,52 @@
+# Project
+Docs/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.user
+*.swp
+*.swo
+
+# Temp files
+*.tmp
+*.temp
+.cache/
