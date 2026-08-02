@@ -18,15 +18,19 @@
             {{-- Right: cart + user --}}
             <div class="hidden md:flex items-center space-x-4">
 
-                {{-- Cart widget placeholder --}}
+                {{-- Cart widget --}}
                 @auth
                     @if(auth()->user()->role === 'user')
-                        <a href="/checkout" class="relative flex items-center text-gray-600 hover:text-orange-500">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-1.5 6h11M10 19a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z"/>
-                            </svg>
-                            <span class="ms-1 text-sm font-medium">€0,00</span>
-                        </a>
+                        <div x-data="cartWidget()" x-init="init()">
+                            <a href="/checkout" class="relative flex items-center text-gray-600 hover:text-orange-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-1.5 6h11M10 19a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z"/>
+                                </svg>
+                                <span x-show="count > 0" class="ms-1 text-sm font-medium">
+                                    (<span x-text="count"></span>) €<span x-text="total"></span>
+                                </span>
+                            </a>
+                        </div>
                     @endif
                 @endauth
 
@@ -103,6 +107,7 @@
 
                 @if(auth()->user()->role === 'user')
                     <a href="/checkout" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Winkelmandje</a>
+
                     <a href="/profiel/{{ auth()->user()->username ?? auth()->user()->id }}" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Mijn profiel</a>
                     <a href="/bestellingen" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Mijn bestellingen</a>
                 @endif

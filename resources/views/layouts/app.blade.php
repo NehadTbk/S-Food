@@ -12,6 +12,26 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    <script>
+        function cartWidget() {
+            return {
+                count: 0,
+                total: '0,00',
+                init() {
+                    this.fetch();
+                    window.addEventListener('cart-updated', () => this.fetch());
+                },
+                fetch() {
+                    fetch('/winkelmandje/samenvatting')
+                        .then(r => r.json())
+                        .then(data => {
+                            this.count = data.cart.count;
+                            this.total = data.cart.total;
+                        });
+                }
+            }
+        }
+    </script>
     <body class="font-sans antialiased bg-gray-50">
 
         @include('layouts.navigation')

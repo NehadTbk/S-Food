@@ -1,25 +1,25 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Home
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Cart (session-based, requires login)
+Route::middleware('auth')->group(function () {
+    Route::post('/winkelmandje/toevoegen', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/winkelmandje/bijwerken', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/winkelmandje/verwijderen', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/winkelmandje/leegmaken', [CartController::class, 'clear'])->name('cart.clear');
 });
+Route::get('/winkelmandje/samenvatting', [CartController::class, 'summary'])->name('cart.summary');
 
 // Public profile
 Route::get('/profiel/{username}', [UserProfileController::class, 'show'])->name('profile.show');
 Route::patch('/profiel/{username}', [UserProfileController::class, 'update'])->middleware('auth')->name('profile.update.public');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__.'/auth.php';
