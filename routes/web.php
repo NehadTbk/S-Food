@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Public profile
+Route::get('/profiel/{username}', [UserProfileController::class, 'show'])->name('profile.show');
+Route::patch('/profiel/{username}', [UserProfileController::class, 'update'])->middleware('auth')->name('profile.update.public');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
