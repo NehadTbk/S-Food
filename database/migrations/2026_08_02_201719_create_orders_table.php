@@ -18,7 +18,11 @@ return new class extends Migration
             $table->date('chosen_date');
             $table->time('chosen_time');
             $table->enum('delivery_type', ['pickup', 'delivery']);
-            $table->string('address')->nullable();
+            $table->string('street')->nullable();
+            $table->string('house_number')->nullable();
+            $table->string('bus')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('city')->nullable();
             $table->enum('status', ['new', 'confirmed', 'in_transit', 'paid', 'cancelled'])->default('new');
             $table->enum('payment_method', ['cash', 'qr']);
             $table->timestamp('paid_at')->nullable();

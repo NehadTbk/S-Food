@@ -26,10 +26,36 @@
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
+        <div class="mt-4 grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+                <x-input-label for="street" value="Straat" />
+                <x-text-input id="street" class="block mt-1 w-full" type="text" name="street" :value="old('street')" required autocomplete="address-line1" />
+                <x-input-error :messages="$errors->get('street')" class="mt-2" />
+            </div>
+            <div>
+                <x-input-label for="house_number" value="Nummer" />
+                <x-text-input id="house_number" class="block mt-1 w-full" type="text" name="house_number" :value="old('house_number')" required />
+                <x-input-error :messages="$errors->get('house_number')" class="mt-2" />
+            </div>
+        </div>
+
         <div class="mt-4">
-            <x-input-label for="address" value="Adres" />
-            <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autocomplete="street-address" />
-            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+            <x-input-label for="bus" value="Bus (optioneel)" />
+            <x-text-input id="bus" class="block mt-1 w-full" type="text" name="bus" :value="old('bus')" />
+            <x-input-error :messages="$errors->get('bus')" class="mt-2" />
+        </div>
+
+        <div class="mt-4 grid grid-cols-3 gap-3">
+            <div>
+                <x-input-label for="postal_code" value="Postcode" />
+                <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" :value="old('postal_code')" required autocomplete="postal-code" />
+                <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
+            </div>
+            <div class="col-span-2">
+                <x-input-label for="city" value="Gemeente" />
+                <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required autocomplete="address-level2" />
+                <x-input-error :messages="$errors->get('city')" class="mt-2" />
+            </div>
         </div>
 
         <div class="mt-4">

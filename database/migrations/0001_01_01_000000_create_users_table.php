@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->string('address');
+            $table->string('street');
+            $table->string('house_number');
+            $table->string('bus')->nullable();
+            $table->string('postal_code');
+            $table->string('city');
             $table->enum('role', ['user', 'admin', 'deliverer'])->default('user');
             $table->boolean('active')->default(true);
             $table->string('username')->unique()->nullable();

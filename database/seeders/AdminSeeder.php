@@ -16,8 +16,11 @@ class AdminSeeder extends Seeder
             'username' => 'admin',
             'email'    => 'admin@ehb.be',
             'password' => Hash::make('Password!321'),
-            'phone'    => '0000000000',
-            'address'  => 'Administratief adres',
+            'phone'        => '0000000000',
+            'street'       => 'Administratief Adres',
+            'house_number' => '1',
+            'postal_code'  => '0000',
+            'city'         => 'Brussel',
             'role'     => 'admin',
             'active'   => true,
         ]);
