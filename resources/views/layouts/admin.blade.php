@@ -19,16 +19,16 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
                     <div class="flex items-center space-x-4">
-                        <a href="/admin" class="text-xl font-bold text-orange-500">S-Food</a>
+                        <a href="/admin" class="text-xl font-bold text-grape-500">S-Food</a>
                         <span class="text-sm text-gray-400 hidden sm:inline">Beheerpaneel</span>
                     </div>
 
                     <div class="hidden md:flex items-center space-x-6">
-                        <a href="/admin" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin') ? 'text-orange-500 font-semibold' : '' }}">Dashboard</a>
-                        <a href="/admin/bestellingen" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin/bestellingen*') ? 'text-orange-500 font-semibold' : '' }}">
+                        <a href="/admin" class="text-sm text-gray-600 hover:text-grape-500 {{ request()->is('admin') ? 'text-grape-500 font-semibold' : '' }}">Dashboard</a>
+                        <a href="/admin/bestellingen" class="text-sm text-gray-600 hover:text-grape-500 {{ request()->is('admin/bestellingen*') ? 'text-grape-500 font-semibold' : '' }}">
                             Bestellingen
                         </a>
-                        <a href="/admin/gebruikers" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('admin/gebruikers*') ? 'text-orange-500 font-semibold' : '' }}">Gebruikers</a>
+                        <a href="/admin/gebruikers" class="text-sm text-gray-600 hover:text-grape-500 {{ request()->is('admin/gebruikers*') ? 'text-grape-500 font-semibold' : '' }}">Gebruikers</a>
                         <a href="/" class="text-sm text-gray-400 hover:text-gray-600">← Naar site</a>
 
                         <form method="POST" action="{{ route('logout') }}">
@@ -49,9 +49,9 @@
 
             {{-- Mobile menu --}}
             <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-gray-100 px-4 py-3 space-y-2">
-                <a href="/admin" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Dashboard</a>
-                <a href="/admin/bestellingen" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Bestellingen</a>
-                <a href="/admin/gebruikers" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Gebruikers</a>
+                <a href="/admin" class="block text-sm text-gray-700 hover:text-grape-500 py-1">Dashboard</a>
+                <a href="/admin/bestellingen" class="block text-sm text-gray-700 hover:text-grape-500 py-1">Bestellingen</a>
+                <a href="/admin/gebruikers" class="block text-sm text-gray-700 hover:text-grape-500 py-1">Gebruikers</a>
                 <a href="/" class="block text-sm text-gray-400 hover:text-gray-600 py-1">← Naar site</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

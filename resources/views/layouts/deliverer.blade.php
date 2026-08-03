@@ -18,15 +18,15 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
                     <div class="flex items-center space-x-4">
-                        <a href="/bezorger" class="text-xl font-bold text-orange-500">S-Food</a>
+                        <a href="/bezorger" class="text-xl font-bold text-grape-500">S-Food</a>
                         <span class="text-sm text-gray-400 hidden sm:inline">Bezorgerpaneel</span>
                     </div>
 
                     <div class="hidden md:flex items-center space-x-6">
-                        <a href="/bezorger" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('bezorger') ? 'text-orange-500 font-semibold' : '' }}">
+                        <a href="/bezorger" class="text-sm text-gray-600 hover:text-grape-500 {{ request()->is('bezorger') ? 'text-grape-500 font-semibold' : '' }}">
                             Beschikbare leveringen
                         </a>
-                        <a href="/bezorger/leveringen" class="text-sm text-gray-600 hover:text-orange-500 {{ request()->is('bezorger/leveringen*') ? 'text-orange-500 font-semibold' : '' }}">
+                        <a href="/bezorger/leveringen" class="text-sm text-gray-600 hover:text-grape-500 {{ request()->is('bezorger/leveringen*') ? 'text-grape-500 font-semibold' : '' }}">
                             Mijn leveringen
                         </a>
 
@@ -51,8 +51,8 @@
 
             <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-gray-100 px-4 py-3 space-y-2">
                 <div class="text-sm font-medium text-gray-800 py-1">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</div>
-                <a href="/bezorger" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Beschikbare leveringen</a>
-                <a href="/bezorger/leveringen" class="block text-sm text-gray-700 hover:text-orange-500 py-1">Mijn leveringen</a>
+                <a href="/bezorger" class="block text-sm text-gray-700 hover:text-grape-500 py-1">Beschikbare leveringen</a>
+                <a href="/bezorger/leveringen" class="block text-sm text-gray-700 hover:text-grape-500 py-1">Mijn leveringen</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="block text-sm text-red-500 hover:text-red-700 py-1">Uitloggen</button>

@@ -24,8 +24,8 @@
                                  alt="Profielfoto"
                                  class="w-24 h-24 rounded-full object-cover border-2 border-gray-200">
                         @else
-                            <div class="w-24 h-24 rounded-full bg-orange-100 flex items-center justify-center border-2 border-gray-200">
-                                <span class="text-3xl font-bold text-orange-400">
+                            <div class="w-24 h-24 rounded-full bg-grape-100 flex items-center justify-center border-2 border-gray-200">
+                                <span class="text-3xl font-bold text-grape-400">
                                     {{ strtoupper(substr($user->first_name, 0, 1)) }}
                                 </span>
                             </div>
@@ -45,7 +45,7 @@
                             @if(auth()->id() === $user->id)
                                 <button @click="editing = true"
                                         x-show="!editing"
-                                        class="mt-3 inline-flex items-center px-4 py-2 bg-orange-500 text-white text-sm rounded-md hover:bg-orange-600 transition">
+                                        class="mt-3 inline-flex items-center px-4 py-2 bg-grape-500 text-white text-sm rounded-md hover:bg-grape-600 transition">
                                     Bewerken
                                 </button>
                             @endif
@@ -91,7 +91,7 @@
                                    name="username"
                                    value="{{ old('username', $user->username) }}"
                                    maxlength="50"
-                                   class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-orange-400 focus:ring-orange-400"
+                                   class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-grape-400 focus:ring-grape-400"
                                    placeholder="Kies een unieke gebruikersnaam">
                             @error('username')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -105,7 +105,7 @@
                                    name="birthday"
                                    value="{{ old('birthday', $user->birthday?->format('Y-m-d')) }}"
                                    max="{{ now()->subDay()->format('Y-m-d') }}"
-                                   class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-orange-400 focus:ring-orange-400">
+                                   class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-grape-400 focus:ring-grape-400">
                             @error('birthday')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -117,7 +117,7 @@
                             <input type="file"
                                    name="photo"
                                    accept="image/jpeg,image/png"
-                                   class="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100"
+                                   class="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-grape-50 file:text-grape-600 hover:file:bg-grape-100"
                                    onchange="
                                        const file = this.files[0];
                                        if (file && file.size > 2 * 1024 * 1024) {
@@ -137,7 +137,7 @@
                             <textarea name="bio"
                                       rows="4"
                                       maxlength="500"
-                                      class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-orange-400 focus:ring-orange-400"
+                                      class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-grape-400 focus:ring-grape-400"
                                       placeholder="Vertel iets over jezelf...">{{ old('bio', $user->bio) }}</textarea>
                             @error('bio')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -147,7 +147,7 @@
                         {{-- Buttons --}}
                         <div class="flex gap-3 pt-2">
                             <button type="submit"
-                                    class="px-5 py-2 bg-orange-500 text-white text-sm rounded-md hover:bg-orange-600 transition">
+                                    class="px-5 py-2 bg-grape-500 text-white text-sm rounded-md hover:bg-grape-600 transition">
                                 Opslaan
                             </button>
                             <button type="button"

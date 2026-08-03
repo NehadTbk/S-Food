@@ -34,7 +34,7 @@
         {{-- Badges --}}
         <div class="absolute top-2 left-2 flex gap-1 flex-wrap">
             @if($item->type === 'daily_special')
-                <span class="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">Dagspecial</span>
+                <span class="bg-grape-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">Dagspecial</span>
             @endif
             @if(!$item->active)
                 <span class="bg-gray-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">Uitverkocht</span>
@@ -46,7 +46,7 @@
     <div class="p-4 flex flex-col flex-1">
         <div class="flex justify-between items-start gap-2 mb-1">
             <h3 class="font-semibold text-gray-800 text-sm leading-tight">{{ $item->name }}</h3>
-            <span class="text-orange-500 font-bold text-sm shrink-0">€{{ number_format($item->price, 2, ',', '.') }}</span>
+            <span class="text-grape-500 font-bold text-sm shrink-0">€{{ number_format($item->price, 2, ',', '.') }}</span>
         </div>
 
         @if(!$compact)
@@ -70,14 +70,14 @@
                 {{-- Add to cart --}}
                 <button @click="addToCart({{ $item->id }}, qty)"
                         {{ !$item->active ? 'disabled' : '' }}
-                        class="flex-1 bg-orange-500 text-white text-xs py-1.5 rounded-lg hover:bg-orange-600 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                        class="flex-1 bg-grape-500 text-white text-xs py-1.5 rounded-lg hover:bg-grape-600 transition disabled:opacity-40 disabled:cursor-not-allowed">
                     {{ $item->active ? 'In mandje' : 'Uitverkocht' }}
                 </button>
             </div>
 
             {{-- Details button --}}
             <button @click="openModal({{ $itemData }})"
-                    class="w-full text-xs text-gray-500 hover:text-orange-500 transition text-center py-1">
+                    class="w-full text-xs text-gray-500 hover:text-grape-500 transition text-center py-1">
                 Details bekijken →
             </button>
         </div>
