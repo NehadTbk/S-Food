@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/winkelmandje/leegmaken', [CartController::class, 'clear'])->name('cart.clear');
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Orders
+    Route::get('/bestellingen', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/bestellingen/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('/bestellingen/{order}/annuleren', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
 Route::get('/winkelmandje/samenvatting', [CartController::class, 'summary'])->name('cart.summary');
 
