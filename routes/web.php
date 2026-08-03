@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserProfileController;
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// News
+Route::get('/nieuws', [NewsController::class, 'index'])->name('news.index');
+Route::get('/nieuws/{newsPost}', [NewsController::class, 'show'])->name('news.show');
 
 // Cart + Checkout (requires login, user role enforced in controller)
 Route::middleware('auth')->group(function () {
