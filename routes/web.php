@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DelivererController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
 use App\Http\Controllers\Admin\OrderController as AdminOrder;
@@ -35,6 +36,15 @@ Route::get('/winkelmandje/samenvatting', [CartController::class, 'summary'])->na
 Route::get('/profiel/{username}', [UserProfileController::class, 'show'])->name('profile.show');
 Route::patch('/profiel/{username}', [UserProfileController::class, 'update'])->middleware('auth')->name('profile.update.public');
 
+
+// Deliverer panel
+Route::middleware(['auth', 'deliverer'])->prefix('bezorger')->name('deliverer.')->group(function () {
+    Route::get('/', [DelivererController::class, 'index'])->name('index');
+    Route::get('/leveringen', [DelivererController::class, 'myDeliveries'])->name('my-deliveries');
+    Route::patch('/{order}/aannemen', [DelivererController::class, 'take'])->name('take');
+    Route::patch('/{order}/betaal-cash', [DelivererController::class, 'payCash'])->name('pay-cash');
+    Route::patch('/{order}/genereer-qr', [DelivererController::class, 'generateQr'])->name('generate-qr');
+});
 
 // Admin panel
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
