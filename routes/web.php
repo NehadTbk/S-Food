@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrder;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -28,6 +29,10 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // Over ons
 Route::get('/over-ons', [PageController::class, 'about'])->name('pages.about');
+
+// Contact
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // Cart + Checkout (requires login, user role enforced in controller)
 Route::middleware('auth')->group(function () {
