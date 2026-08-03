@@ -37,6 +37,13 @@
         @include('layouts.navigation')
 
         <main class="min-h-screen">
+            @isset($header)
+            <div class="bg-white border-b border-gray-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    {{ $header }}
+                </div>
+            </div>
+            @endisset
             {{ $slot }}
         </main>
 
