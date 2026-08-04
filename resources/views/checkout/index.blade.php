@@ -75,6 +75,19 @@
              },
              fmt(val) {
                  return '€\u00a0' + val.toFixed(2).replace('.', ',');
+             },
+             removeItem(menuItemId) {
+                 fetch('{{ route('cart.remove') }}', {
+                     method: 'DELETE',
+                     headers: {
+                         'Content-Type': 'application/json',
+                         'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').content,
+                     },
+                     body: JSON.stringify({ menu_item_id: menuItemId }),
+                 }).then(() => {
+                     window.dispatchEvent(new CustomEvent('cart-updated'));
+                     window.location.reload();
+                 });
              }
          }">
 
@@ -108,9 +121,18 @@
                                 <p class="text-xs text-gray-500">{{ $row['quantity'] }} × €{{ number_format((float)$row['item']->price, 2, ',', '.') }}</p>
                             </div>
 
-                            <p class="text-sm font-semibold text-gray-800 flex-shrink-0">
-                                €{{ number_format($row['lineTotal'], 2, ',', '.') }}
-                            </p>
+                            <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                                <p class="text-sm font-semibold text-gray-800">
+                                    €{{ number_format($row['lineTotal'], 2, ',', '.') }}
+                                </p>
+                                <button @click="removeItem({{ $row['item']->id }})"
+                                        class="text-gray-300 hover:text-red-500 transition"
+                                        title="Verwijderen">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         @endforeach
                     </div>

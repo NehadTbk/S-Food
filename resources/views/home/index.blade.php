@@ -201,17 +201,31 @@ function menuPage() {
             toast.querySelector('span').textContent = itemName + ' toegevoegd aan winkelmandje!';
 
             const cartIcon = document.getElementById('cart-icon');
-            if (cartIcon && cartIcon.offsetParent !== null) {
-                const arrow = document.createElement('div');
+            let reposition = null;
+            let arrow = null;
+
+            if (cartIcon) {
+                arrow = document.createElement('div');
                 arrow.className = 'absolute top-1/2 -right-2 -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-grape-50';
                 toast.appendChild(arrow);
 
                 document.body.appendChild(toast);
 
-                const rect = cartIcon.getBoundingClientRect();
-                const toastRect = toast.getBoundingClientRect();
-                toast.style.top = (rect.top + rect.height / 2 - toastRect.height / 2) + 'px';
-                toast.style.right = (window.innerWidth - rect.left + 8) + 'px';
+                reposition = () => {
+                    if (cartIcon.offsetParent === null) {
+                        arrow.style.display = 'none';
+                        toast.style.top = '1rem';
+                        toast.style.right = '1rem';
+                        return;
+                    }
+                    arrow.style.display = '';
+                    const rect = cartIcon.getBoundingClientRect();
+                    const toastRect = toast.getBoundingClientRect();
+                    toast.style.top = (rect.top + rect.height / 2 - toastRect.height / 2) + 'px';
+                    toast.style.right = (window.innerWidth - rect.left + 8) + 'px';
+                };
+                reposition();
+                window.addEventListener('resize', reposition);
             } else {
                 toast.style.top = '1rem';
                 toast.style.right = '1rem';
@@ -224,7 +238,10 @@ function menuPage() {
 
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-x-2');
-                setTimeout(() => toast.remove(), 300);
+                setTimeout(() => {
+                    toast.remove();
+                    if (reposition) window.removeEventListener('resize', reposition);
+                }, 300);
             }, 3000);
         }
     }
