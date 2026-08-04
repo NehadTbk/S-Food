@@ -19,7 +19,24 @@
             </a>
         </div>
 
-        @if(session('payment_confirmed') || $order->status === 'paid')
+        @if($order->status === 'cancelled')
+        {{-- Order was cancelled, cannot be paid --}}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+            <div class="mx-auto mb-4 w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </div>
+            <h1 class="text-xl font-bold text-gray-800 mb-1">Bestelling geannuleerd</h1>
+            <p class="text-gray-500 text-sm mb-6">
+                Bestelling #{{ $order->id }} is geannuleerd en kan niet meer betaald worden.
+            </p>
+            <a href="/" class="block w-full bg-grape-500 hover:bg-grape-600 text-white font-semibold py-3 rounded-xl text-sm transition text-center">
+                Terug naar S-Food
+            </a>
+        </div>
+
+        @elseif(session('payment_confirmed') || $order->status === 'paid')
         {{-- Already paid / just confirmed --}}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
             <div class="mx-auto mb-4 w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">

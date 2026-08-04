@@ -73,6 +73,10 @@ class UserController extends Controller
 
     public function updateRole(Request $request, User $user): RedirectResponse
     {
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Je kunt je eigen rol niet wijzigen.');
+        }
+
         $request->validate(['role' => ['required', 'in:user,admin,deliverer']]);
         $user->update(['role' => $request->role]);
         return back()->with('success', 'Rol van ' . $user->first_name . ' bijgewerkt.');

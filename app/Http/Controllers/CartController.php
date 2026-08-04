@@ -24,7 +24,7 @@ class CartController extends Controller
         $cart = session('cart', []);
         $id   = $request->menu_item_id;
 
-        $cart[$id] = ($cart[$id] ?? 0) + $request->quantity;
+        $cart[$id] = min(99, ($cart[$id] ?? 0) + $request->quantity);
 
         session(['cart' => $cart]);
 

@@ -44,6 +44,13 @@
                 </div>
             </div>
             @endisset
+
+            @if(session('info'))
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+                    <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-xl px-4 py-3 text-sm">{{ session('info') }}</div>
+                </div>
+            @endif
+
             {{ $slot }}
         </main>
 

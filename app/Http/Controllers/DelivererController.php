@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -37,17 +38,27 @@ class DelivererController extends Controller
     // Take a delivery
     public function take(Order $order): RedirectResponse
     {
-        if ($order->status !== 'confirmed'
-            || $order->delivery_type !== 'delivery'
-            || $order->deliverer_id !== null) {
+        $taken = DB::transaction(function () use ($order) {
+            $locked = Order::whereKey($order->id)->lockForUpdate()->first();
+
+            if ($locked->status !== 'confirmed'
+                || $locked->delivery_type !== 'delivery'
+                || $locked->deliverer_id !== null) {
+                return false;
+            }
+
+            $locked->update([
+                'deliverer_id' => auth()->id(),
+                'status'       => 'in_transit',
+            ]);
+
+            return true;
+        });
+
+        if (!$taken) {
             return redirect()->route('deliverer.index')
                 ->with('error', 'Deze levering is niet meer beschikbaar.');
         }
-
-        $order->update([
-            'deliverer_id' => auth()->id(),
-            'status'       => 'in_transit',
-        ]);
 
         return redirect()->route('deliverer.my-deliveries')
             ->with('success', 'Bestelling #' . $order->id . ' aangenomen.');

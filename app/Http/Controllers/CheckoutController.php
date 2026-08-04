@@ -35,10 +35,18 @@ class CheckoutController extends Controller
             return redirect('/')->with('info', 'Je winkelmandje is leeg.');
         }
 
+        $menuItems = MenuItem::whereIn('id', array_keys($cart))->where('active', true)->get();
+
+        // Drop items that were removed or deactivated since they were added to the cart
+        $cart = array_intersect_key($cart, array_flip($menuItems->pluck('id')->all()));
+        session(['cart' => $cart]);
+
+        if (empty($cart)) {
+            return redirect('/')->with('info', 'Eén of meer gerechten in je winkelmandje zijn niet meer beschikbaar. Je winkelmandje is leeggemaakt.');
+        }
+
         $cartItems = [];
         $subtotal  = 0;
-
-        $menuItems = MenuItem::whereIn('id', array_keys($cart))->get();
 
         foreach ($menuItems as $item) {
             $qty       = $cart[$item->id] ?? 0;
@@ -74,7 +82,7 @@ class CheckoutController extends Controller
 
         $request->validate([
             'chosen_date'    => ['required', 'date', 'after_or_equal:today'],
-            'chosen_time'    => ['required', 'string'],
+            'chosen_time'    => ['required', 'string', 'in:' . implode(',', $this->generateTimeSlots())],
             'delivery_type'  => ['required', 'in:pickup,delivery'],
             'payment_method' => ['required', 'in:cash,qr'],
             'street'         => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:255'],
@@ -84,7 +92,16 @@ class CheckoutController extends Controller
             'city'           => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:100'],
         ]);
 
-        $menuItems    = MenuItem::whereIn('id', array_keys($cart))->get()->keyBy('id');
+        $menuItems = MenuItem::whereIn('id', array_keys($cart))->where('active', true)->get()->keyBy('id');
+
+        // Drop items that were removed or deactivated since they were added to the cart
+        $cart = array_intersect_key($cart, $menuItems->all());
+
+        if (empty($cart)) {
+            session()->forget('cart');
+            return redirect('/')->with('info', 'Eén of meer gerechten in je winkelmandje zijn niet meer beschikbaar. Je winkelmandje is leeggemaakt.');
+        }
+
         $subtotal     = 0;
         $deliveryCost = $request->delivery_type === 'delivery' ? self::DELIVERY_COST : 0;
 

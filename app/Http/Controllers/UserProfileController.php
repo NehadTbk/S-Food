@@ -30,10 +30,12 @@ class UserProfileController extends Controller
         abort_unless(auth()->id() === $user->id, 403);
 
         $request->validate([
-            'username' => ['nullable', 'string', 'max:50', Rule::unique('users')->ignore($user->id)],
+            'username' => ['nullable', 'string', 'max:50', 'not_regex:/^[0-9]+$/', Rule::unique('users')->ignore($user->id)],
             'birthday' => ['nullable', 'date', 'before:today'],
             'bio'      => ['nullable', 'string', 'max:500'],
             'photo'    => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+        ], [
+            'username.not_regex' => 'Een username mag niet enkel uit cijfers bestaan.',
         ]);
 
         if ($request->hasFile('photo')) {

@@ -67,7 +67,8 @@
                         <form method="POST" action="{{ route('admin.users.update-role', $user) }}" class="flex gap-1.5 items-center">
                             @csrf @method('PATCH')
                             <select name="role" onchange="this.form.submit()"
-                                    class="text-xs rounded-lg border-gray-200 py-1 focus:ring-grape-500 focus:border-grape-500 {{ $roleClasses[$user->role] ?? 'bg-gray-100 text-gray-600' }}">
+                                    class="text-xs rounded-lg border-gray-200 py-1 focus:ring-grape-500 focus:border-grape-500 {{ $roleClasses[$user->role] ?? 'bg-gray-100 text-gray-600' }}"
+                                    {{ $user->id === auth()->id() ? 'disabled title=Je eigen rol kun je niet wijzigen' : '' }}>
                                 <option value="user"      {{ $user->role === 'user'      ? 'selected' : '' }}>Gebruiker</option>
                                 <option value="admin"     {{ $user->role === 'admin'     ? 'selected' : '' }}>Admin</option>
                                 <option value="deliverer" {{ $user->role === 'deliverer' ? 'selected' : '' }}>Bezorger</option>

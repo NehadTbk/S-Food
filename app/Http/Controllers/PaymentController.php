@@ -24,6 +24,11 @@ class PaymentController extends Controller
                 ->with('already_paid', true);
         }
 
+        if ($order->status === 'cancelled') {
+            return redirect()->route('payment.show', $token)
+                ->with('error', 'Deze bestelling is geannuleerd en kan niet meer betaald worden.');
+        }
+
         $order->update([
             'status'  => 'paid',
             'paid_at' => now(),
