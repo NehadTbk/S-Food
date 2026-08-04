@@ -196,32 +196,34 @@ function menuPage() {
 
         showToast(itemName) {
             const toast = document.createElement('div');
-            toast.className = 'fixed flex items-center gap-2 bg-grape-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg z-50 opacity-0 -translate-y-2 transition-all duration-300';
-            toast.innerHTML = '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span></span>';
+            toast.className = 'fixed flex items-center gap-1.5 bg-grape-50 border border-grape-200 text-grape-700 text-xs px-3 py-2 rounded-xl shadow-lg z-50 opacity-0 translate-x-2 transition-all duration-300';
+            toast.innerHTML = '<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span></span>';
             toast.querySelector('span').textContent = itemName + ' toegevoegd aan winkelmandje!';
 
             const cartIcon = document.getElementById('cart-icon');
             if (cartIcon && cartIcon.offsetParent !== null) {
-                const rect = cartIcon.getBoundingClientRect();
-                toast.style.top = (rect.bottom + 12) + 'px';
-                toast.style.right = (window.innerWidth - rect.right) + 'px';
-
                 const arrow = document.createElement('div');
-                arrow.className = 'absolute -top-2 right-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-grape-500';
+                arrow.className = 'absolute top-1/2 -right-2 -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-grape-50';
                 toast.appendChild(arrow);
+
+                document.body.appendChild(toast);
+
+                const rect = cartIcon.getBoundingClientRect();
+                const toastRect = toast.getBoundingClientRect();
+                toast.style.top = (rect.top + rect.height / 2 - toastRect.height / 2) + 'px';
+                toast.style.right = (window.innerWidth - rect.left + 8) + 'px';
             } else {
                 toast.style.top = '1rem';
                 toast.style.right = '1rem';
+                document.body.appendChild(toast);
             }
 
-            document.body.appendChild(toast);
-
             requestAnimationFrame(() => {
-                toast.classList.remove('opacity-0', '-translate-y-2');
+                toast.classList.remove('opacity-0', 'translate-x-2');
             });
 
             setTimeout(() => {
-                toast.classList.add('opacity-0', '-translate-y-2');
+                toast.classList.add('opacity-0', 'translate-x-2');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
