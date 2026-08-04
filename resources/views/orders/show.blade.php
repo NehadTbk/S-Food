@@ -92,7 +92,7 @@
                 </div>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Betaling</p>
-                    <p class="font-medium text-gray-800">{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</p>
+                    <p class="font-medium text-gray-800">{{ $order->payment_method === 'cash' ? 'Cash' : ($order->payment_method === 'qr' ? 'QR-code' : 'Nog te bepalen') }}</p>
                 </div>
             </div>
 
@@ -175,7 +175,7 @@
             <div x-show="!confirm">
                 <h3 class="text-sm font-semibold text-gray-700 mb-1">Bestelling annuleren</h3>
                 <p class="text-sm text-gray-500 mb-4">
-                    Je kunt deze bestelling annuleren zolang ze nog niet bevestigd is.
+                    Je kunt deze bestelling annuleren zolang ze nog niet bevestigd is door de chef.
                 </p>
                 <button @click="confirm = true"
                         class="text-sm text-red-500 hover:text-red-700 font-semibold underline transition">

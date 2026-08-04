@@ -53,7 +53,7 @@ class OrderController extends Controller
         if ($order->status !== 'confirmed' || $order->delivery_type !== 'pickup') {
             return back()->with('error', 'Actie niet mogelijk voor deze bestelling.');
         }
-        $order->update(['status' => 'paid', 'paid_at' => now()]);
+        $order->update(['status' => 'paid', 'paid_at' => now(), 'payment_method' => 'cash']);
         return back()->with('success', 'Bestelling #' . $order->id . ' als betaald (cash) gemarkeerd.');
     }
 
@@ -65,7 +65,7 @@ class OrderController extends Controller
 
         // Generate a unique token if not already set
         if (!$order->payment_token) {
-            $order->update(['payment_token' => Str::uuid()]);
+            $order->update(['payment_token' => Str::uuid(), 'payment_method' => 'qr']);
         }
 
         return back()->with('show_qr', $order->id)->with('qr_token', $order->payment_token);

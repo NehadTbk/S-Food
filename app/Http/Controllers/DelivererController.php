@@ -71,7 +71,7 @@ class DelivererController extends Controller
             return back()->with('error', 'Actie niet mogelijk voor deze bestelling.');
         }
 
-        $order->update(['status' => 'paid', 'paid_at' => now()]);
+        $order->update(['status' => 'paid', 'paid_at' => now(), 'payment_method' => 'cash']);
 
         return back()->with('success', 'Bestelling #' . $order->id . ' als betaald (cash) gemarkeerd.');
     }
@@ -84,7 +84,7 @@ class DelivererController extends Controller
         }
 
         if (!$order->payment_token) {
-            $order->update(['payment_token' => Str::uuid()]);
+            $order->update(['payment_token' => Str::uuid(), 'payment_method' => 'qr']);
         }
 
         return back()

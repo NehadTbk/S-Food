@@ -122,7 +122,7 @@
                 </div>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Betaalmethode</p>
-                    <p class="font-medium text-gray-800">{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</p>
+                    <p class="font-medium text-gray-800">{{ $order->payment_method === 'cash' ? 'Cash' : ($order->payment_method === 'qr' ? 'QR-code' : 'Nog te bepalen') }}</p>
                 </div>
                 @if($order->paid_at)
                 <div>

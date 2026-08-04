@@ -97,25 +97,26 @@
                     <div class="flex flex-col items-end gap-3 flex-shrink-0">
                         <div class="text-right">
                             <p class="text-lg font-bold text-gray-900">€{{ number_format((float)$order->total, 2, ',', '.') }}</p>
-                            <p class="text-xs text-gray-400">{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</p>
+                            @if(!$inTransit)
+                                <p class="text-xs text-gray-400">{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</p>
+                            @endif
                         </div>
 
                         @if($inTransit)
-                            @if($order->payment_method === 'cash')
+                            <div class="flex gap-2">
                                 <form method="POST" action="{{ route('deliverer.pay-cash', $order) }}">
                                     @csrf @method('PATCH')
                                     <button class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
                                         💵 Cash ontvangen
                                     </button>
                                 </form>
-                            @else
                                 <form method="POST" action="{{ route('deliverer.generate-qr', $order) }}">
                                     @csrf @method('PATCH')
                                     <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
                                         📱 QR-code tonen
                                     </button>
                                 </form>
-                            @endif
+                            </div>
                         @else
                             <p class="text-xs text-emerald-600 font-semibold">
                                 ✓ Betaald {{ $order->paid_at?->format('d/m H:i') }}

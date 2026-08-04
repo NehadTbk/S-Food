@@ -77,7 +77,7 @@
                 </div>
 
                 {{-- Add to cart --}}
-                <button @click="addToCart({{ $item->id }}, qty)"
+                <button @click="addToCart({{ $item->id }}, qty, @js($item->name))"
                         {{ !$item->active ? 'disabled' : '' }}
                         class="flex-1 bg-grape-500 text-white text-xs py-1.5 rounded-lg hover:bg-grape-600 transition disabled:opacity-40 disabled:cursor-not-allowed">
                     {{ $item->active ? 'In mandje' : 'Uitverkocht' }}

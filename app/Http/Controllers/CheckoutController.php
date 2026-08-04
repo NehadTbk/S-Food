@@ -84,7 +84,6 @@ class CheckoutController extends Controller
             'chosen_date'    => ['required', 'date', 'after_or_equal:today'],
             'chosen_time'    => ['required', 'string', 'in:' . implode(',', $this->generateTimeSlots())],
             'delivery_type'  => ['required', 'in:pickup,delivery'],
-            'payment_method' => ['required', 'in:cash,qr'],
             'street'         => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:255'],
             'house_number'   => ['required_if:delivery_type,delivery', 'nullable', 'string', 'max:20'],
             'bus'            => ['nullable', 'string', 'max:20'],
@@ -124,7 +123,6 @@ class CheckoutController extends Controller
             'postal_code'    => $request->delivery_type === 'delivery' ? $request->postal_code : null,
             'city'           => $request->delivery_type === 'delivery' ? $request->city : null,
             'status'         => 'new',
-            'payment_method' => $request->payment_method,
             'delivery_cost'  => $deliveryCost,
             'total'          => $total,
         ]);

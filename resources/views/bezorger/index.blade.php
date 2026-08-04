@@ -45,10 +45,9 @@
                     <p class="text-sm text-gray-600">{{ $order->postal_code }} {{ $order->city }}</p>
                 </div>
 
-                {{-- Customer + payment --}}
+                {{-- Customer --}}
                 <div class="flex justify-between text-xs text-gray-400 mb-5">
                     <span>{{ $order->user->first_name }} {{ $order->user->last_name }}</span>
-                    <span>{{ $order->payment_method === 'cash' ? '💵 Cash' : '📱 QR-code' }}</span>
                 </div>
 
                 {{-- Take button --}}

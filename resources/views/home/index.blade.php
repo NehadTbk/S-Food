@@ -143,7 +143,7 @@
                                 <button @click="if(modalQty < 99) modalQty++"
                                         class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition text-lg font-bold">+</button>
                             </div>
-                            <button @click="addToCart(modal.id, modalQty); modal = null"
+                            <button @click="addToCart(modal.id, modalQty, modal.name); modal = null"
                                     class="flex-1 bg-grape-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-grape-600 transition">
                                 In winkelmandje
                             </button>
@@ -173,7 +173,7 @@ function menuPage() {
             this.modalQty = 1;
         },
 
-        addToCart(menuItemId, quantity) {
+        addToCart(menuItemId, quantity, itemName) {
             @auth
             fetch('{{ route('cart.add') }}', {
                 method: 'POST',
@@ -186,17 +186,44 @@ function menuPage() {
             .then(r => r.json())
             .then(data => {
                 window.dispatchEvent(new CustomEvent('cart-updated'));
-                // Simple toast feedback
-                const toast = document.createElement('div');
-                toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white text-sm px-4 py-2 rounded-lg shadow-lg z-50 transition';
-                toast.textContent = 'Toegevoegd aan winkelmandje!';
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2500);
+                this.showToast(itemName);
             })
             .catch(() => alert('Er ging iets mis. Probeer opnieuw.'));
             @else
             window.location.href = '{{ route('login') }}';
             @endauth
+        },
+
+        showToast(itemName) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed flex items-center gap-2 bg-grape-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg z-50 opacity-0 -translate-y-2 transition-all duration-300';
+            toast.innerHTML = '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span></span>';
+            toast.querySelector('span').textContent = itemName + ' toegevoegd aan winkelmandje!';
+
+            const cartIcon = document.getElementById('cart-icon');
+            if (cartIcon && cartIcon.offsetParent !== null) {
+                const rect = cartIcon.getBoundingClientRect();
+                toast.style.top = (rect.bottom + 12) + 'px';
+                toast.style.right = (window.innerWidth - rect.right) + 'px';
+
+                const arrow = document.createElement('div');
+                arrow.className = 'absolute -top-2 right-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-grape-500';
+                toast.appendChild(arrow);
+            } else {
+                toast.style.top = '1rem';
+                toast.style.right = '1rem';
+            }
+
+            document.body.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', '-translate-y-2');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
     }
 }

@@ -25,7 +25,7 @@
                 @auth
                     @if(auth()->user()->role === 'user')
                         <div x-data="cartWidget()" x-init="init()">
-                            <a href="/checkout" class="relative flex items-center text-gray-600 hover:text-grape-500">
+                            <a href="/checkout" id="cart-icon" class="relative flex items-center text-gray-600 hover:text-grape-500">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-1.5 6h11M10 19a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z"/>
                                 </svg>

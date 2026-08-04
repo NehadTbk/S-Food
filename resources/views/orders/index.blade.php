@@ -56,7 +56,9 @@
                             <div class="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
                                 <span>{{ $order->chosen_date->format('d/m/Y') }} om {{ $order->chosen_time }}</span>
                                 <span>{{ $order->delivery_type === 'delivery' ? 'Levering' : 'Afhalen' }}</span>
-                                <span>{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</span>
+                                @if($order->payment_method)
+                                    <span>{{ $order->payment_method === 'cash' ? 'Cash' : 'QR-code' }}</span>
+                                @endif
                             </div>
                         </div>
 
