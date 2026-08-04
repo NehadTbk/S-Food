@@ -9,12 +9,13 @@
         'price'            => number_format($item->price, 2, ',', '.'),
         'photo'            => $item->photo,
         'type'             => $item->type,
+        'is_vegan'         => $item->is_vegan,
         'allergeens'       => $item->allergeens->map(fn($a) => ['id' => $a->id, 'name' => $a->name]),
     ]);
 @endphp
 
 <div x-data="{ qty: 1 }"
-     x-show="activeCategory === null || activeCategory === {{ $item->category_id }}"
+     x-show="(activeCategory === null || activeCategory === {{ $item->category_id }}) && (!veganOnly || {{ $item->is_vegan ? 'true' : 'false' }})"
      class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition">
 
     {{-- Photo --}}
@@ -45,7 +46,15 @@
     {{-- Content --}}
     <div class="p-4 flex flex-col flex-1">
         <div class="flex justify-between items-start gap-2 mb-1">
-            <h3 class="font-semibold text-gray-800 text-sm leading-tight">{{ $item->name }}</h3>
+            <h3 class="font-semibold text-gray-800 text-sm leading-tight flex items-center gap-1.5">
+                {{ $item->name }}
+                @if($item->is_vegan)
+                    <span class="inline-flex items-center gap-1 text-grape-500 text-xs font-semibold shrink-0">
+                        <img src="/images/vegan-logo.jpg" alt="" class="w-4 h-4 rounded-full">
+                        Vegan
+                    </span>
+                @endif
+            </h3>
             <span class="text-grape-500 font-bold text-sm shrink-0">€{{ number_format($item->price, 2, ',', '.') }}</span>
         </div>
 

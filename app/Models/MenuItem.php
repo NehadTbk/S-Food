@@ -17,12 +17,14 @@ class MenuItem extends Model
         'type',
         'available_on',
         'active',
+        'is_vegan',
     ];
 
     protected function casts(): array
     {
         return [
             'active' => 'boolean',
+            'is_vegan' => 'boolean',
             'available_on' => 'date',
             'price' => 'decimal:2',
         ];

@@ -32,6 +32,7 @@ class MenuItemController extends Controller
             'type'              => ['required', 'in:fixed,daily_special'],
             'available_on'      => ['nullable', 'date', 'required_if:type,daily_special'],
             'active'            => ['boolean'],
+            'is_vegan'          => ['boolean'],
             'photo'             => ['nullable', 'image', 'max:10240'],
             'allergeens'        => ['nullable', 'array'],
             'allergeens.*'      => ['exists:allergeens,id'],
@@ -41,7 +42,8 @@ class MenuItemController extends Controller
             $data['photo'] = $request->file('photo')->store('photos', 'public');
         }
 
-        $data['active'] = $request->boolean('active', true);
+        $data['active']   = $request->boolean('active', true);
+        $data['is_vegan'] = $request->boolean('is_vegan');
 
         $item = MenuItem::create($data);
         $item->allergeens()->sync($request->input('allergeens', []));
@@ -68,6 +70,7 @@ class MenuItemController extends Controller
             'type'              => ['required', 'in:fixed,daily_special'],
             'available_on'      => ['nullable', 'date', 'required_if:type,daily_special'],
             'active'            => ['boolean'],
+            'is_vegan'          => ['boolean'],
             'photo'             => ['nullable', 'image', 'max:10240'],
             'allergeens'        => ['nullable', 'array'],
             'allergeens.*'      => ['exists:allergeens,id'],
@@ -82,7 +85,8 @@ class MenuItemController extends Controller
             unset($data['photo']);
         }
 
-        $data['active'] = $request->boolean('active');
+        $data['active']   = $request->boolean('active');
+        $data['is_vegan'] = $request->boolean('is_vegan');
 
         $menuItem->update($data);
         $menuItem->allergeens()->sync($request->input('allergeens', []));

@@ -20,22 +20,31 @@
     </section>
     @endif
 
-    {{-- ===================== CATEGORY TABS ===================== --}}
-    <div class="mb-6 overflow-x-auto">
-        <div class="flex gap-2 min-w-max">
-            <button @click="activeCategory = null"
-                    :class="activeCategory === null ? 'bg-grape-500 text-white' : 'bg-white text-gray-600 hover:bg-grape-50 border border-gray-200'"
-                    class="px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">
-                Alles
-            </button>
-            @foreach($categories as $category)
-            <button @click="activeCategory = {{ $category->id }}"
-                    :class="activeCategory === {{ $category->id }} ? 'bg-grape-500 text-white' : 'bg-white text-gray-600 hover:bg-grape-50 border border-gray-200'"
-                    class="px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">
-                {{ $category->name }}
-            </button>
-            @endforeach
+    {{-- ===================== CATEGORY TABS + VEGAN FILTER ===================== --}}
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="overflow-x-auto">
+            <div class="flex gap-2 min-w-max">
+                <button @click="activeCategory = null"
+                        :class="activeCategory === null ? 'bg-grape-500 text-white' : 'bg-white text-gray-600 hover:bg-grape-50 border border-gray-200'"
+                        class="px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">
+                    Alles
+                </button>
+                @foreach($categories as $category)
+                <button @click="activeCategory = {{ $category->id }}"
+                        :class="activeCategory === {{ $category->id }} ? 'bg-grape-500 text-white' : 'bg-white text-gray-600 hover:bg-grape-50 border border-gray-200'"
+                        class="px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap">
+                    {{ $category->name }}
+                </button>
+                @endforeach
+            </div>
         </div>
+
+        <button @click="veganOnly = !veganOnly"
+                :class="veganOnly ? 'bg-grape-500 text-white' : 'bg-white text-gray-600 hover:bg-grape-50 border border-gray-200'"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap self-start">
+            <img src="/images/vegan-logo.jpg" alt="" class="w-4 h-4 rounded-full">
+            Enkel vegan
+        </button>
     </div>
 
     {{-- ===================== MENU ITEMS GRID ===================== --}}
@@ -86,7 +95,15 @@
                     <div class="p-6 space-y-4">
                         {{-- Name + price --}}
                         <div class="flex justify-between items-start gap-4">
-                            <h3 class="text-xl font-bold text-gray-800" x-text="modal.name"></h3>
+                            <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                                <span x-text="modal.name"></span>
+                                <template x-if="modal.is_vegan">
+                                    <span class="inline-flex items-center gap-1 text-grape-500 text-xs font-semibold shrink-0">
+                                        <img src="/images/vegan-logo.jpg" alt="" class="w-4 h-4 rounded-full">
+                                        Vegan
+                                    </span>
+                                </template>
+                            </h3>
                             <span class="text-grape-500 font-bold text-lg shrink-0">
                                 €<span x-text="modal.price"></span>
                                 <span class="text-xs font-normal text-gray-400">/ persoon</span>
@@ -103,16 +120,19 @@
                         </div>
 
                         {{-- Allergens --}}
-                        <template x-if="modal.allergeens && modal.allergeens.length > 0">
-                            <div>
-                                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Allergenen</p>
+                        <div>
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Allergenen</p>
+                            <template x-if="modal.allergeens && modal.allergeens.length > 0">
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="a in modal.allergeens" :key="a.id">
                                         <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded-full border border-yellow-200" x-text="a.name"></span>
                                     </template>
                                 </div>
-                            </div>
-                        </template>
+                            </template>
+                            <template x-if="!modal.allergeens || modal.allergeens.length === 0">
+                                <p class="text-sm text-gray-400">Geen allergenen bekend</p>
+                            </template>
+                        </div>
 
                         {{-- Stepper + add to cart --}}
                         <div class="flex items-center gap-4 pt-2">
@@ -140,6 +160,7 @@
 function menuPage() {
     return {
         activeCategory: null,
+        veganOnly: false,
         modal: null,
         modalQty: 1,
 

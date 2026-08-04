@@ -129,7 +129,12 @@
                                             @endif
                                         </div>
                                         <div>
-                                            <p class="font-medium text-gray-800">{{ $item->name }}</p>
+                                            <p class="font-medium text-gray-800 flex items-center gap-1.5">
+                                                {{ $item->name }}
+                                                @if($item->is_vegan)
+                                                    <img src="/images/vegan-logo.jpg" alt="Vegan" title="Vegan" class="w-4 h-4 rounded-full">
+                                                @endif
+                                            </p>
                                             <p class="text-xs text-gray-400 truncate max-w-[180px]">{{ $item->short_description }}</p>
                                         </div>
                                     </div>

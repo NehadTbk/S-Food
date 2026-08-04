@@ -129,6 +129,15 @@
                 <label for="active" class="text-sm text-gray-700">Actief (zichtbaar op de site)</label>
             </div>
 
+            {{-- Vegan --}}
+            <div class="flex items-center gap-2">
+                <input type="hidden" name="is_vegan" value="0">
+                <input type="checkbox" name="is_vegan" value="1" id="is_vegan"
+                       {{ old('is_vegan', $menuItem->is_vegan) ? 'checked' : '' }}
+                       class="rounded text-grape-500 focus:ring-grape-500">
+                <label for="is_vegan" class="text-sm text-gray-700">Vegan</label>
+            </div>
+
             <div class="flex gap-3 pt-2">
                 <button type="submit"
                         class="bg-grape-500 hover:bg-grape-600 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition">

@@ -13,7 +13,6 @@ class CategorySeeder extends Seeder
             'Voorgerechten',
             'Hoofdgerechten',
             'Desserts',
-            'Vegetarisch',
             'Soepen',
             'Dagspecials',
         ];
