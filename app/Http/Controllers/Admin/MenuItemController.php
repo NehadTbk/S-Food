@@ -32,7 +32,7 @@ class MenuItemController extends Controller
             'type'              => ['required', 'in:fixed,daily_special'],
             'available_on'      => ['nullable', 'date', 'required_if:type,daily_special'],
             'active'            => ['boolean'],
-            'photo'             => ['nullable', 'image', 'max:2048'],
+            'photo'             => ['nullable', 'image', 'max:10240'],
             'allergeens'        => ['nullable', 'array'],
             'allergeens.*'      => ['exists:allergeens,id'],
         ]);
@@ -68,7 +68,7 @@ class MenuItemController extends Controller
             'type'              => ['required', 'in:fixed,daily_special'],
             'available_on'      => ['nullable', 'date', 'required_if:type,daily_special'],
             'active'            => ['boolean'],
-            'photo'             => ['nullable', 'image', 'max:2048'],
+            'photo'             => ['nullable', 'image', 'max:10240'],
             'allergeens'        => ['nullable', 'array'],
             'allergeens.*'      => ['exists:allergeens,id'],
         ]);

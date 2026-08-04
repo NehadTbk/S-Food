@@ -107,7 +107,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Foto</label>
                 <input type="file" name="photo" accept="image/*"
                        class="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-grape-50 file:text-grape-700 hover:file:bg-grape-100">
-                <p class="mt-1 text-xs text-gray-400">JPG of PNG, max. 2 MB</p>
+                <p class="mt-1 text-xs text-gray-400">JPG of PNG, max. 10 MB</p>
                 @error('photo') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
