@@ -38,7 +38,11 @@
             <div class="flex justify-center mb-4">
                 <img src="{{ $qrImage }}" alt="QR code" class="w-56 h-56 rounded-lg border border-gray-100">
             </div>
-            <p class="text-xs text-gray-400 mb-5 break-all">{{ $qrUrl }}</p>
+            <a href="{{ $qrUrl }}" target="_blank" class="block text-xs text-grape-500 hover:text-grape-600 underline mb-5 break-all">{{ $qrUrl }}</a>
+            <a href="{{ $qrUrl }}" target="_blank"
+               class="block w-full bg-grape-500 hover:bg-grape-600 text-white font-semibold py-2.5 rounded-xl text-sm transition mb-2">
+                Open betaalpagina
+            </a>
             <button @click="open = false"
                     class="w-full border border-gray-300 text-gray-600 hover:bg-gray-50 font-semibold py-2.5 rounded-xl text-sm transition">
                 Sluiten
@@ -65,32 +69,53 @@
         <div class="flex flex-wrap gap-3">
             <form method="POST" action="{{ route('admin.orders.confirm', $order) }}">
                 @csrf @method('PATCH')
-                <button class="bg-grape-500 hover:bg-grape-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                    ✓ Bevestig bestelling
+                <button class="bg-grape-500 hover:bg-grape-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition inline-flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Bevestig bestelling
                 </button>
             </form>
-            <form method="POST" action="{{ route('admin.orders.cancel', $order) }}"
-                  onsubmit="return confirm('Bestelling annuleren?')">
-                @csrf @method('PATCH')
-                <button class="border border-red-300 text-red-500 hover:bg-red-50 text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                    ✕ Annuleer bestelling
-                </button>
-            </form>
+            <x-confirm-form :action="route('admin.orders.cancel', $order)" method="PATCH"
+                             title="Bestelling annuleren?"
+                             message="Bestelling #{{ $order->id }} wordt geannuleerd. Dit kan niet ongedaan gemaakt worden."
+                             confirm-label="Annuleer bestelling" confirm-class="bg-red-500 hover:bg-red-600"
+                             class="border border-red-300 text-red-500 hover:bg-red-50 text-sm font-semibold px-5 py-2.5 rounded-lg transition inline-flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                Annuleer bestelling
+            </x-confirm-form>
         </div>
         @endif
 
         @if($order->status === 'confirmed' && $isPickup)
         <div class="flex flex-wrap gap-3">
-            <form method="POST" action="{{ route('admin.orders.pay-cash', $order) }}">
-                @csrf @method('PATCH')
-                <button class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                    💵 Cash ontvangen
-                </button>
-            </form>
+            <x-confirm-form :action="route('admin.orders.pay-cash', $order)" method="PATCH"
+                             title="Cash betaling bevestigen?"
+                             message="Bestelling #{{ $order->id }} — €{{ number_format((float)$order->total, 2, ',', '.') }} wordt gemarkeerd als betaald."
+                             confirm-label="Bevestigen"
+                             class="bg-grape-500 hover:bg-grape-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition inline-flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="2" y="6" width="20" height="12" rx="2" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="2.5" stroke-width="2"/>
+                    <path stroke-linecap="round" stroke-width="2" d="M6 9h.01M18 15h.01"/>
+                </svg>
+                Cash ontvangen
+            </x-confirm-form>
             <form method="POST" action="{{ route('admin.orders.generate-qr', $order) }}">
                 @csrf @method('PATCH')
-                <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                    📱 QR-betaling genereren
+                <button class="border border-gray-300 text-gray-600 hover:bg-gray-50 text-sm font-semibold px-5 py-2.5 rounded-lg transition inline-flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+                        <rect x="14" y="14" width="3" height="3" fill="currentColor" stroke="none"/>
+                        <rect x="18" y="14" width="3" height="3" fill="currentColor" stroke="none"/>
+                        <rect x="14" y="18" width="3" height="3" fill="currentColor" stroke="none"/>
+                        <rect x="18" y="18" width="3" height="3" fill="currentColor" stroke="none"/>
+                    </svg>
+                    QR-betaling genereren
                 </button>
             </form>
         </div>
