@@ -2,7 +2,7 @@
 
 A Laravel web application for a home cook offering dishes for pickup or delivery. Customers can order, track their orders, and maintain a public profile. Admins manage the menu, news, FAQ, orders, users, and contact messages. Delivery drivers manage their deliveries.
 
-Built as a Laravel re-exam project — with the underlying idea that this project could genuinely be used if my mother ever decides to start her own business.
+Built as a Laravel re-exam project, with the underlying idea that this project could genuinely be used if my mother ever decides to start her own business.
 
 ## Features by user type
 
@@ -90,10 +90,10 @@ After seeding (`php artisan migrate --seed`):
 ## Tech stack
 
 - [Laravel 12](https://laravel.com/docs)
-- [Laravel Breeze](https://github.com/laravel/breeze) — authentication scaffolding (login/register/password reset)
+- [Laravel Breeze](https://github.com/laravel/breeze), authentication scaffolding (login/register/password reset)
 - [Tailwind CSS](https://tailwindcss.com/docs)
-- [Alpine.js](https://alpinejs.dev/) — front-end interactivity (dropdowns, modals, toggles)
-- MySQL (default) — any Laravel-supported database can be used via `.env`
+- [Alpine.js](https://alpinejs.dev/), front-end interactivity (dropdowns, modals, toggles)
+- MySQL (default), any Laravel-supported database can be used via `.env`
 
 ## Source attribution
 
