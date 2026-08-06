@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FaqController as AdminFaq;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
 use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\OrderController as AdminOrder;
+use App\Http\Controllers\Admin\PageController as AdminPage;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -117,6 +118,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/contact', [AdminContact::class, 'index'])->name('contact.index');
     Route::get('/contact/{contactMessage}', [AdminContact::class, 'show'])->name('contact.show');
     Route::post('/contact/{contactMessage}/antwoorden', [AdminContact::class, 'reply'])->name('contact.reply');
+
+    // Over ons
+    Route::get('/over-ons/bewerken', [AdminPage::class, 'editAbout'])->name('pages.about.edit');
+    Route::patch('/over-ons', [AdminPage::class, 'updateAbout'])->name('pages.about.update');
 });
 
 // Demo QR payment page (public — customer scans QR code)
