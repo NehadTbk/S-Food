@@ -32,12 +32,7 @@
     </div>
     @endif
 
-    @if(session('success'))
-        <div class="mb-6 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">{{ session('error') }}</div>
-    @endif
+    <x-flash-messages margin="mb-6" />
 
     <h1 class="text-xl font-bold text-gray-800 mb-6">Mijn leveringen</h1>
 

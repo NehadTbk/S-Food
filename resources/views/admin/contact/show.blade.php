@@ -9,9 +9,7 @@
             <h1 class="text-xl font-bold text-gray-800">Contactbericht</h1>
         </div>
 
-        @if(session('success'))
-            <div class="mb-4 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-        @endif
+        <x-flash-messages />
 
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
             <div class="flex flex-wrap gap-x-6 gap-y-1 text-sm">

@@ -2,11 +2,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-        @if(session('success'))
-            <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm">
-                {{ session('success') }}
-            </div>
-        @endif
+        <x-flash-messages margin="mb-6" success-class="bg-green-50 border-green-200 text-green-700" />
 
         {{-- VIEW MODE --}}
         <div x-data="{ editing: {{ $errors->any() ? 'true' : 'false' }} }">

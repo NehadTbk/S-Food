@@ -1,9 +1,7 @@
 <x-admin-layout>
     <h1 class="text-xl font-bold text-gray-800 mb-6">Contactberichten</h1>
 
-    @if(session('success'))
-        <div class="mb-4 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-    @endif
+    <x-flash-messages />
 
     @if($contactMessages->isEmpty())
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 text-center text-gray-400 text-sm">
@@ -29,9 +27,9 @@
                         <td class="px-4 py-3 text-gray-600">{{ $message->sent_at->format('d/m/Y H:i') }}</td>
                         <td class="px-4 py-3 text-center">
                             @if($message->replied_at)
-                                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Beantwoord</span>
+                                <x-status-badge color-classes="bg-emerald-100 text-emerald-700">Beantwoord</x-status-badge>
                             @else
-                                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Niet beantwoord</span>
+                                <x-status-badge color-classes="bg-amber-100 text-amber-700">Niet beantwoord</x-status-badge>
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right">

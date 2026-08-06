@@ -15,15 +15,12 @@
             @csrf
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Naam <span class="text-red-400">*</span></label>
+                <x-form-field label="Naam" name="name" required class="sm:col-span-2">
                     <input type="text" name="name" value="{{ old('name') }}" required
                            class="w-full rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500 @error('name') border-red-400 @enderror">
-                    @error('name') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-                </div>
+                </x-form-field>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Categorie <span class="text-red-400">*</span></label>
+                <x-form-field label="Categorie" name="category_id" required>
                     <select name="category_id" required
                             class="w-full rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500 @error('category_id') border-red-400 @enderror">
                         <option value="">Kies categorie</option>
@@ -31,37 +28,30 @@
                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
                     </select>
-                    @error('category_id') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-                </div>
+                </x-form-field>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Prijs (per persoon) <span class="text-red-400">*</span></label>
+                <x-form-field label="Prijs (per persoon)" name="price" required>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
                         <input type="number" name="price" value="{{ old('price') }}" step="0.01" min="0" required
                                class="w-full pl-7 rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500 @error('price') border-red-400 @enderror">
                     </div>
-                    @error('price') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-                </div>
+                </x-form-field>
 
-                <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Korte beschrijving <span class="text-red-400">*</span></label>
+                <x-form-field label="Korte beschrijving" name="short_description" required class="sm:col-span-2">
                     <input type="text" name="short_description" value="{{ old('short_description') }}" required maxlength="255"
                            class="w-full rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500 @error('short_description') border-red-400 @enderror">
-                    @error('short_description') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-                </div>
+                </x-form-field>
 
-                <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Volledige beschrijving</label>
+                <x-form-field label="Volledige beschrijving" name="full_description" class="sm:col-span-2">
                     <textarea name="full_description" rows="3"
                               class="w-full rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500">{{ old('full_description') }}</textarea>
-                </div>
+                </x-form-field>
 
-                <div class="sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ingrediënten</label>
+                <x-form-field label="Ingrediënten" name="ingredients" class="sm:col-span-2">
                     <textarea name="ingredients" rows="2"
                               class="w-full rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500">{{ old('ingredients') }}</textarea>
-                </div>
+                </x-form-field>
             </div>
 
             {{-- Type --}}
@@ -79,12 +69,10 @@
                         <span class="text-sm text-gray-700">Dagspecial</span>
                     </label>
                 </div>
-                <div x-show="type === 'daily_special'" x-transition class="mt-3">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Beschikbaar op <span class="text-red-400">*</span></label>
+                <x-form-field label="Beschikbaar op" name="available_on" required x-show="type === 'daily_special'" x-transition class="mt-3">
                     <input type="date" name="available_on" value="{{ old('available_on') }}"
                            class="rounded-lg border-gray-300 text-sm focus:ring-grape-500 focus:border-grape-500 @error('available_on') border-red-400 @enderror">
-                    @error('available_on') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-                </div>
+                </x-form-field>
             </div>
 
             {{-- Allergeens --}}
@@ -102,14 +90,11 @@
                 </div>
             </div>
 
-            {{-- Photo --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Foto</label>
+            <x-form-field label="Foto" name="photo">
                 <input type="file" name="photo" accept="image/*"
                        class="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-grape-50 file:text-grape-700 hover:file:bg-grape-100">
                 <p class="mt-1 text-xs text-gray-400">JPG of PNG, max. 10 MB</p>
-                @error('photo') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
-            </div>
+            </x-form-field>
 
             {{-- Active --}}
             <div class="flex items-center gap-2">

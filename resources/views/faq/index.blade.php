@@ -1,12 +1,7 @@
 <x-app-layout>
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    @if(session('success'))
-        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">{{ session('error') }}</div>
-    @endif
+    <x-flash-messages margin="mb-6" success-class="bg-green-50 border-green-200 text-green-700" />
 
     <div class="flex items-center justify-between mb-6 gap-4">
         <h1 class="text-2xl font-bold text-gray-800">Veelgestelde vragen</h1>
@@ -46,28 +41,16 @@
                         @auth
                             @if(auth()->user()->role === 'admin')
                             <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition">
-                                <button @click="editing = true" class="text-gray-400 hover:text-grape-500 p-0.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                    </svg>
-                                </button>
-                                @if($category->faqItems->isEmpty())
-                                <x-confirm-form :action="route('admin.faq.categories.destroy', $category)" method="DELETE"
-                                                 title="Categorie verwijderen?"
-                                                 message="'{{ $category->name }}' wordt permanent verwijderd."
-                                                 confirm-label="Verwijderen" confirm-class="bg-red-500 hover:bg-red-600"
-                                                 class="text-gray-400 hover:text-red-500 p-0.5">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </x-confirm-form>
-                                @else
-                                <span class="text-gray-200 p-0.5 cursor-not-allowed" title="Verwijder eerst alle vragen in deze categorie">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </span>
-                                @endif
+                                <x-edit-delete-actions
+                                    edit-click="editing = true"
+                                    :delete-route="route('admin.faq.categories.destroy', $category)"
+                                    delete-title="Categorie verwijderen?"
+                                    :delete-message="'\'' . $category->name . '\' wordt permanent verwijderd.'"
+                                    :deletable="$category->faqItems->isEmpty()"
+                                    disabled-message="Verwijder eerst alle vragen in deze categorie"
+                                    icon-class="w-3.5 h-3.5"
+                                    edit-class="text-gray-400 hover:text-grape-500 p-0.5"
+                                    delete-class="text-gray-400 hover:text-red-500 p-0.5" />
                             </div>
                             @endif
                         @endauth
@@ -104,20 +87,14 @@
                                 @auth
                                     @if(auth()->user()->role === 'admin')
                                     <div class="flex gap-1 flex-shrink-0" x-show="!editing">
-                                        <button type="button" @click="editing = true; open = false" class="text-gray-400 hover:text-grape-500 p-0.5">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                        </button>
-                                        <x-confirm-form :action="route('admin.faq.items.destroy', $item)" method="DELETE"
-                                                         title="Vraag verwijderen?"
-                                                         message="'{{ $item->question }}' wordt permanent verwijderd."
-                                                         confirm-label="Verwijderen" confirm-class="bg-red-500 hover:bg-red-600"
-                                                         class="text-gray-400 hover:text-red-500 p-0.5">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </x-confirm-form>
+                                        <x-edit-delete-actions
+                                            edit-click="editing = true; open = false"
+                                            :delete-route="route('admin.faq.items.destroy', $item)"
+                                            delete-title="Vraag verwijderen?"
+                                            :delete-message="'\'' . $item->question . '\' wordt permanent verwijderd.'"
+                                            icon-class="w-3.5 h-3.5"
+                                            edit-class="text-gray-400 hover:text-grape-500 p-0.5"
+                                            delete-class="text-gray-400 hover:text-red-500 p-0.5" />
                                     </div>
                                     @endif
                                 @endauth
