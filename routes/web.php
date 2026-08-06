@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DelivererController;
+use App\Http\Controllers\Admin\ContactController as AdminContact;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\FaqController as AdminFaq;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
@@ -111,6 +112,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/gebruikers', [AdminUser::class, 'store'])->name('users.store');
     Route::patch('/gebruikers/{user}/rol', [AdminUser::class, 'updateRole'])->name('users.update-role');
     Route::patch('/gebruikers/{user}/toggle-actief', [AdminUser::class, 'toggleActive'])->name('users.toggle-active');
+
+    // Contact
+    Route::get('/contact', [AdminContact::class, 'index'])->name('contact.index');
+    Route::get('/contact/{contactMessage}', [AdminContact::class, 'show'])->name('contact.show');
+    Route::post('/contact/{contactMessage}/antwoorden', [AdminContact::class, 'reply'])->name('contact.reply');
 });
 
 // Demo QR payment page (public — customer scans QR code)

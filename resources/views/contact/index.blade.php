@@ -13,13 +13,15 @@
 
             <div>
                 <x-input-label for="name" value="Naam" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
+                              :value="old('name', auth()->check() ? trim(auth()->user()->first_name . ' ' . auth()->user()->last_name) : '')" required autofocus />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div class="mt-4">
                 <x-input-label for="email" value="E-mailadres" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
+                              :value="old('email', auth()->user()?->email)" required />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 

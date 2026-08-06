@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactMessage extends Model
 {
-    protected $fillable = ['name', 'email', 'message', 'sent_at'];
+    protected $fillable = ['name', 'email', 'message', 'sent_at', 'reply', 'replied_at'];
 
     protected function casts(): array
     {
         return [
-            'sent_at' => 'datetime',
+            'sent_at'    => 'datetime',
+            'replied_at' => 'datetime',
         ];
     }
 }
