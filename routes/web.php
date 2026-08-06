@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DelivererController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\FaqController as AdminFaq;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
 use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\OrderController as AdminOrder;
@@ -87,6 +88,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/nieuws/{newsPost}/bewerken', [AdminNews::class, 'edit'])->name('news.edit');
     Route::patch('/nieuws/{newsPost}', [AdminNews::class, 'update'])->name('news.update');
     Route::delete('/nieuws/{newsPost}', [AdminNews::class, 'destroy'])->name('news.destroy');
+
+    // FAQ
+    Route::post('/faq/categorieen', [AdminFaq::class, 'storeCategory'])->name('faq.categories.store');
+    Route::patch('/faq/categorieen/{faqCategory}', [AdminFaq::class, 'updateCategory'])->name('faq.categories.update');
+    Route::delete('/faq/categorieen/{faqCategory}', [AdminFaq::class, 'destroyCategory'])->name('faq.categories.destroy');
+    Route::post('/faq/vragen', [AdminFaq::class, 'storeItem'])->name('faq.items.store');
+    Route::patch('/faq/vragen/{faqItem}', [AdminFaq::class, 'updateItem'])->name('faq.items.update');
+    Route::delete('/faq/vragen/{faqItem}', [AdminFaq::class, 'destroyItem'])->name('faq.items.destroy');
 
     // Orders
     Route::get('/bestellingen', [AdminOrder::class, 'index'])->name('orders.index');
