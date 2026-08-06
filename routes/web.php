@@ -3,6 +3,7 @@
 use App\Http\Controllers\DelivererController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
+use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\OrderController as AdminOrder;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\CartController;
@@ -79,6 +80,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('/menu/{menuItem}', [AdminMenuItem::class, 'update'])->name('menu.update');
     Route::delete('/menu/{menuItem}', [AdminMenuItem::class, 'destroy'])->name('menu.destroy');
     Route::patch('/menu/{menuItem}/toggle', [AdminMenuItem::class, 'toggle'])->name('menu.toggle');
+
+    // News
+    Route::get('/nieuws/nieuw', [AdminNews::class, 'create'])->name('news.create');
+    Route::post('/nieuws', [AdminNews::class, 'store'])->name('news.store');
+    Route::get('/nieuws/{newsPost}/bewerken', [AdminNews::class, 'edit'])->name('news.edit');
+    Route::patch('/nieuws/{newsPost}', [AdminNews::class, 'update'])->name('news.update');
+    Route::delete('/nieuws/{newsPost}', [AdminNews::class, 'destroy'])->name('news.destroy');
 
     // Orders
     Route::get('/bestellingen', [AdminOrder::class, 'index'])->name('orders.index');
