@@ -14,12 +14,7 @@
     @endphp
 
     {{-- Flash --}}
-    @if(session('success'))
-        <div class="mb-4 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="mb-4 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">{{ session('error') }}</div>
-    @endif
+    <x-flash-messages />
 
     {{-- QR modal (opens if session has show_qr for this order) --}}
     @if(session('show_qr') == $order->id && session('qr_token'))

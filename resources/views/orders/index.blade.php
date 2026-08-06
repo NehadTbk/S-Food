@@ -5,17 +5,7 @@
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        {{-- Flash messages --}}
-        @if(session('success'))
-            <div class="mb-6 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
-                {{ session('error') }}
-            </div>
-        @endif
+        <x-flash-messages margin="mb-6" />
 
         @if($orders->isEmpty())
             <div class="text-center py-20">

@@ -15,12 +15,7 @@
         </form>
     </div>
 
-    @if(session('success'))
-        <div class="mb-4 bg-grape-50 border border-grape-200 text-grape-700 rounded-xl px-4 py-3 text-sm">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="mb-4 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">{{ session('error') }}</div>
-    @endif
+    <x-flash-messages />
 
     @php
         $statusMap = [
@@ -69,9 +64,7 @@
                             €{{ number_format((float)$order->total, 2, ',', '.') }}
                         </td>
                         <td class="px-4 py-3 text-center">
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full {{ $status['class'] }}">
-                                {{ $status['label'] }}
-                            </span>
+                            <x-status-badge :color-classes="$status['class']">{{ $status['label'] }}</x-status-badge>
                         </td>
                         <td class="px-4 py-3 text-right">
                             <a href="{{ route('admin.orders.show', $order) }}"

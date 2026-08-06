@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CategorySeeder::class,
             AllergeenSeeder::class,
+            AboutPageSeeder::class,
         ]);
     }
 }

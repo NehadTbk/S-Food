@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\DelivererController;
+use App\Http\Controllers\Admin\ContactController as AdminContact;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\FaqController as AdminFaq;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItem;
+use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\OrderController as AdminOrder;
+use App\Http\Controllers\Admin\PageController as AdminPage;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -80,6 +84,21 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/menu/{menuItem}', [AdminMenuItem::class, 'destroy'])->name('menu.destroy');
     Route::patch('/menu/{menuItem}/toggle', [AdminMenuItem::class, 'toggle'])->name('menu.toggle');
 
+    // News
+    Route::get('/nieuws/nieuw', [AdminNews::class, 'create'])->name('news.create');
+    Route::post('/nieuws', [AdminNews::class, 'store'])->name('news.store');
+    Route::get('/nieuws/{newsPost}/bewerken', [AdminNews::class, 'edit'])->name('news.edit');
+    Route::patch('/nieuws/{newsPost}', [AdminNews::class, 'update'])->name('news.update');
+    Route::delete('/nieuws/{newsPost}', [AdminNews::class, 'destroy'])->name('news.destroy');
+
+    // FAQ
+    Route::post('/faq/categorieen', [AdminFaq::class, 'storeCategory'])->name('faq.categories.store');
+    Route::patch('/faq/categorieen/{faqCategory}', [AdminFaq::class, 'updateCategory'])->name('faq.categories.update');
+    Route::delete('/faq/categorieen/{faqCategory}', [AdminFaq::class, 'destroyCategory'])->name('faq.categories.destroy');
+    Route::post('/faq/vragen', [AdminFaq::class, 'storeItem'])->name('faq.items.store');
+    Route::patch('/faq/vragen/{faqItem}', [AdminFaq::class, 'updateItem'])->name('faq.items.update');
+    Route::delete('/faq/vragen/{faqItem}', [AdminFaq::class, 'destroyItem'])->name('faq.items.destroy');
+
     // Orders
     Route::get('/bestellingen', [AdminOrder::class, 'index'])->name('orders.index');
     Route::get('/bestellingen/{order}', [AdminOrder::class, 'show'])->name('orders.show');
@@ -94,6 +113,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/gebruikers', [AdminUser::class, 'store'])->name('users.store');
     Route::patch('/gebruikers/{user}/rol', [AdminUser::class, 'updateRole'])->name('users.update-role');
     Route::patch('/gebruikers/{user}/toggle-actief', [AdminUser::class, 'toggleActive'])->name('users.toggle-active');
+
+    // Contact
+    Route::get('/contact', [AdminContact::class, 'index'])->name('contact.index');
+    Route::get('/contact/{contactMessage}', [AdminContact::class, 'show'])->name('contact.show');
+    Route::post('/contact/{contactMessage}/antwoorden', [AdminContact::class, 'reply'])->name('contact.reply');
+
+    // Over ons
+    Route::get('/over-ons/bewerken', [AdminPage::class, 'editAbout'])->name('pages.about.edit');
+    Route::patch('/over-ons', [AdminPage::class, 'updateAbout'])->name('pages.about.update');
 });
 
 // Demo QR payment page (public — customer scans QR code)
