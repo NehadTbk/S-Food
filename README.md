@@ -46,7 +46,7 @@ Everything a guest can do, plus:
 Requirements: PHP 8.2+, Composer, Node.js + npm, MySQL.
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/NehadTbk/S-Food.git
 cd S-Food
 
 composer install
